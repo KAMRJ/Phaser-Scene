@@ -1,0 +1,84 @@
+var config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    scene: {
+        preload: preload,
+        create: create
+    }
+};
+
+var game = new Phaser.Game(config);
+
+function preload() {
+    // Carga tus imágenes y recursos aquí
+    this.load.image('llave1', 'ruta/a/llave1.png');
+    this.load.image('llave2', 'ruta/a/llave2.png');
+    this.load.image('llave3', 'ruta/a/llave3.png');
+    this.load.image('llave4', 'ruta/a/llave4.png');
+    this.load.image('llaveCorrecta', 'ruta/a/llaveCorrecta.png');
+    this.load.image('mensajeIncorrecto', 'ruta/a/mensajeIncorrecto.png');
+    this.load.image('mensajeCorrecto', 'ruta/a/mensajeCorrecto.png');
+}
+
+function create() {
+    // Agrega los sprites de las llaves
+    var llave1 = this.add.sprite(100, 100, 'llave1').setInteractive();
+    var llave2 = this.add.sprite(200, 100, 'llave2').setInteractive();
+    var llave3 = this.add.sprite(300, 100, 'llave3').setInteractive();
+    var llave4 = this.add.sprite(400, 100, 'llave4').setInteractive();
+
+    // Maneja la interacción con las llaves
+    llave1.on('pointerdown', function () {
+        mostrarMensajeIncorrecto();
+    });
+
+    llave2.on('pointerdown', function () {
+        mostrarMensajeIncorrecto();
+    });
+
+    llave3.on('pointerdown', function () {
+        mostrarMensajeIncorrecto();
+    });
+
+    llave4.on('pointerdown', function () {
+        mostrarMensajeCorrecto();
+    });
+}
+
+function mostrarMensajeIncorrecto() {
+    // Cambia a la escena/mensaje incorrecto
+    game.scene.start('mensajeIncorrectoScene');
+}
+
+function mostrarMensajeCorrecto() {
+    // Cambia a la escena/mensaje correcto
+    game.scene.start('mensajeCorrectoScene');
+}
+
+// Agrega escenas para los mensajes incorrecto y correcto
+var mensajeIncorrectoScene = {
+    preload: function () {
+        // Carga la imagen del mensaje incorrecto aquí
+        this.load.image('mensajeIncorrecto', 'ruta/a/mensajeIncorrecto.png');
+    },
+    create: function () {
+        // Muestra la imagen del mensaje incorrecto
+        this.add.image(400, 300, 'mensajeIncorrecto');
+    }
+};
+
+var mensajeCorrectoScene = {
+    preload: function () {
+        // Carga la imagen del mensaje correcto aquí
+        this.load.image('mensajeCorrecto', 'ruta/a/mensajeCorrecto.png');
+    },
+    create: function () {
+        // Muestra la imagen del mensaje correcto
+        this.add.image(400, 300, 'mensajeCorrecto');
+    }
+};
+
+// Agrega las escenas al juego
+game.scene.add('mensajeIncorrectoScene', mensajeIncorrectoScene);
+game.scene.add('mensajeCorrectoScene', mensajeCorrectoScene);
